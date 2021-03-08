@@ -3,3 +3,4 @@ with open('output.txt', 'r') as dataIn:
         for line in dataIn:
             line = line.rstrip('\n') + '\t0.000'
             print(line, file=dataOut)
+            

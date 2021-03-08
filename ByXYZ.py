@@ -8,12 +8,11 @@ xMax = 800
 yMin = 0
 yMax = 500
 inc = 5
-
 xSteps = int((xMax - xMin) / inc)
 ySteps = int((yMax - yMin) / inc)
 
 # collect data
-optics = True
+optics = False
 x = []
 y = []
 z = []
@@ -25,7 +24,14 @@ with open('data.txt') as data:
         if optics:
             z.append(float(positions[5]))
         else:
-            z.append(float(positions[3]))
+            z.append(float(positions[2]))
+
+# remove min
+print(min(z))
+minZ = min(z)
+for i in range(len(z)):
+    z[i] -= minZ
+print(min(z))
 
 # empty table
 vals = np.zeros((ySteps,xSteps))
@@ -36,7 +42,7 @@ yi = np.arange(0,yMax,inc)
 xi,yi = np.meshgrid(xi,yi)
 
 # interpolate
-zi = griddata((x,y),z,(xi,yi),method='cubic')
+zi = griddata((x,y),z,(xi,yi),method='linear')
 
 # insert valid calibration values into table
 for j in range(int(yMax/inc)):
@@ -44,10 +50,8 @@ for j in range(int(yMax/inc)):
         if not np.isnan(zi[j][i]):
             vals[j,i] = zi[j][i]
 
-# rotate and output
+# output
 np.savetxt('output.txt', vals, delimiter='\t', fmt='%1.3f')
-
-#exit(0)
 
 # show graph
 fig = plt.figure()
