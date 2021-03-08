@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import griddata
 
-# data coordinates and values
+# machine stage info
 xMin = 0
 xMax = 800
 yMin = 0
@@ -12,11 +12,23 @@ inc = 5
 xSteps = int((xMax - xMin) / inc)
 ySteps = int((yMax - yMin) / inc)
 
-x = [10,10,50,50]
-y = [10,50,10,50]
-z = [-1.001,-1.002,-1,-1.003]
+# collect data
+optics = True
+x = []
+y = []
+z = []
+with open('data.txt') as data:
+    for line in data:
+        positions = line.split(',')
+        x.append(float(positions[0]))
+        y.append(float(positions[1]))
+        if optics:
+            z.append(float(positions[5]))
+        else:
+            z.append(float(positions[3]))
 
-vals = np.zeros((xSteps,ySteps))
+# empty table
+vals = np.zeros((ySteps,xSteps))
 
 # target grid to interpolate to
 xi = np.arange(0,xMax,inc)
@@ -25,13 +37,26 @@ xi,yi = np.meshgrid(xi,yi)
 
 # interpolate
 zi = griddata((x,y),z,(xi,yi),method='cubic')
-#zi = np.nan_to_num(zi)
 
-# create XYZ interpolation table
-for i in range(int(xMax/inc)):
-    for j in range(int(yMax/inc)):
+# insert valid calibration values into table
+for j in range(int(yMax/inc)):
+    for i in range(int(xMax/inc)):
         if not np.isnan(zi[j][i]):
-            vals[i,j] = zi[j][i]
+            vals[j,i] = zi[j][i]
 
-vals = np.rot90(vals)
-np.savetxt('output3.tsv', vals, delimiter='\t', fmt='%1.3f')
+# rotate and output
+np.savetxt('output.txt', vals, delimiter='\t', fmt='%1.3f')
+
+#exit(0)
+
+# show graph
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.xaxis.set_ticks_position('top')
+ax.xaxis.set_label_position('top') 
+plt.contourf(xi,yi,vals)
+plt.plot(x,y,'k.')
+plt.xlabel('X',fontsize=16)
+plt.ylabel('Y',fontsize=16)
+plt.gca().invert_yaxis()
+plt.show()
