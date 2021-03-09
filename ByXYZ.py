@@ -27,11 +27,9 @@ with open('PosDataTestA.txt') as data:
             z.append(float(positions[2]))
 
 # remove min
-print(min(z))
 minZ = min(z)
 for i in range(len(z)):
     z[i] -= minZ
-print(min(z))
 
 # empty table
 vals = np.zeros((ySteps,xSteps))
@@ -62,5 +60,6 @@ plt.contourf(xi,yi,vals)
 plt.plot(x,y,'k.')
 plt.xlabel('X',fontsize=16)
 plt.ylabel('Y',fontsize=16)
+plt.gca().invert_xaxis()
 plt.gca().invert_yaxis()
 plt.show()

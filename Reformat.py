@@ -1,10 +1,9 @@
 textfile = open("output.txt")
 lines = textfile.readlines()
 with open('formattedOutput.txt', 'w') as dataOut:
-    for line in reversed(lines):
+    for line in lines:
         line = line.rstrip('\n')
         line = line.split('\t')
-        line.reverse()
         linebuffer = ''
         for val in line:
             if val == '0.000':
