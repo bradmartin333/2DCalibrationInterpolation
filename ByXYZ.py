@@ -4,7 +4,7 @@ from scipy.interpolate import griddata
 
 # machine stage info
 xMin = 0
-xMax = 800
+xMax = 500
 yMin = 0
 yMax = 500
 inc = 5
@@ -12,11 +12,11 @@ xSteps = int((xMax - xMin) / inc)
 ySteps = int((yMax - yMin) / inc)
 
 # collect data
-optics = False
+optics = True
 x = []
 y = []
 z = []
-with open('data.txt') as data:
+with open('PosDataTestA.txt') as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
