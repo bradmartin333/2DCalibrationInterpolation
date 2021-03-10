@@ -61,7 +61,7 @@ np.savetxt('output.txt', vals, delimiter='\t', fmt='%1.3f')
 textfile = open("output.txt")
 lines = textfile.readlines()
 numPos = 0
-with open('2dCal.txt', 'w') as dataOut:
+with open('Python/2dCal.txt', 'w') as dataOut:
     print('\' CHUCK 2D CALIBRATION', file=dataOut)
     print('\' CREATED ' + strftime("%Y-%m-%d %H:%M:%S", gmtime()), file=dataOut)
     print(':START2D 2 1 6 4 -5 -5 102', file=dataOut)
