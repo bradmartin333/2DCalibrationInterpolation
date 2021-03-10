@@ -947,7 +947,7 @@
        Overriding target "GetNativeManifest" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "GetNativeManifest" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets".
        Overriding target "GetTargetPathWithTargetPlatformMoniker" in project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" with target "GetTargetPathWithTargetPlatformMoniker" from project "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.Cpp.DesignTime.targets".
        The target "CopyLocalFilesOutputGroup" listed in a BeforeTargets attribute at "C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets (103,82)" does not exist in the project, and will be ignored.
-Build started 3/10/2021 9:12:39 AM.
+Build started 3/10/2021 10:56:14 AM.
 Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInterpolation\GSL\Project1\Project1.vcxproj" on node 2 (Build target(s)).
      1>Building with tools version "Current".
        Target "EnableIntermediateOutputPathMismatchWarning" skipped, due to false condition; ('$(RestoreProjectStyle)' == 'PackageReference') was evaluated as ('' == 'PackageReference').
@@ -974,7 +974,7 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
          VSTEL_SolutionSessionID={473B9B4B-BFD6-4027-A9F4-75695436AB2B}
        Done executing task "SetEnv".
        Task "SetEnv"
-         VSTEL_CurrentSolutionBuildID=477856097
+         VSTEL_CurrentSolutionBuildID=484070676
        Done executing task "SetEnv".
        Task "SetEnv"
          VSTEL_ProjectID={2c57eacb-b568-4176-b5e3-e12e1260047c}
@@ -1102,7 +1102,6 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
        Task "VCMessage" skipped, due to false condition; ('$(IgnoreWarnIntDirSharingDetected)' != 'true' and '$(IntDirSharingDetected)' == 'true') was evaluated as ('' != 'true' and '' == 'true').
        Task "VCMessage" skipped, due to false condition; ('$(DesignTimeBuild)'!='true' and '$(IgnoreWarnIntDirInTempDetected)' != 'true' and ('$(IntDirFullPath.StartsWith($(Tmp), true, null))' == 'true' or '$(IntDirFullPath.StartsWith($(Temp), true, null))' == 'true' or '$(OutDirFullPath.StartsWith($(Tmp), true, null))' == 'true' or '$(OutDirFullPath.StartsWith($(Temp), true, null))' == 'true')) was evaluated as (''!='true' and '' != 'true' and ('False' == 'true' or 'False' == 'true' or 'False' == 'true' or 'False' == 'true')).
        Task "MakeDir"
-         Creating directory "x64\Debug\Project1.tlog\".
        Done executing task "MakeDir".
      1>Done building target "PrepareForBuild" in project "Project1.vcxproj".
        Target "_PrepareForReferenceResolution" skipped. Previously built successfully.
@@ -1273,20 +1272,26 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
        Task "Message" skipped, due to false condition; ('$(VcpkgEnableManifest)' != 'true' and '$(VcpkgManifestRoot)' != '') was evaluated as ('false' != 'true' and '' != '').
      1>Done building target "VcpkgCheckManifestRoot" in project "Project1.vcxproj".
      1>Target "ClCompile" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets" from project "C:\Repos\2DCalibrationInterpolation\GSL\Project1\Project1.vcxproj" (target "_ClCompile" depends on it):
-       Using "Delete" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
-       Task "Delete"
-       Done executing task "Delete".
+       Task "Delete" skipped, due to false condition; ('%(ClCompile.DebugInformationFormat)' != '' and '%(ClCompile.DebugInformationFormat)' != 'None' and '%(ClCompile.DebugInformationFormat)' != 'OldStyle' and '%(ClCompile.ProgramDataBaseFileName)' != '' and !Exists(%(ClCompile.ProgramDataBaseFileName))) was evaluated as ('EditAndContinue' != '' and 'EditAndContinue' != 'None' and 'EditAndContinue' != 'OldStyle' and 'x64\Debug\vc142.pdb' != '' and !Exists(x64\Debug\vc142.pdb)).
        Task "MultiToolTask" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(ClCompile.CompilerIteration)' == 'Modules') was evaluated as ('' != 'true' and '' == 'Modules').
        Task "MultiToolTask" skipped, due to false condition; ('%(ClCompile.ExcludedFromBuild)' != 'true' and '%(ClCompile.CompilerIteration)' == '' and '$(MultiProcCL)' == 'true') was evaluated as ('' != 'true' and '' == '' and 'false' == 'true').
        Task "CL" skipped, due to false condition; ('%(ClCompile.PrecompiledHeader)' == 'Create' and '%(ClCompile.ExcludedFromBuild)'!='true' and '%(ClCompile.CompilerIteration)' == '' and '$(MultiProcCL)' != 'true') was evaluated as ('NotUsing' == 'Create' and ''!='true' and '' == '' and 'false' != 'true').
        Using "CL" task from assembly "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.Build.CppTasks.Common.dll".
        Task "CL"
-         Forcing recompile of all source files due to missing PDB "x64\Debug\vc142.pdb".
+         Read Tracking Logs:
+         	x64\Debug\Project1.tlog\CL.read.1.tlog
+         Outputs for C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\SOURCE.CPP:
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ
+         Source.cpp will be compiled because C:\Repos\2DCalibrationInterpolation\GSL\Project1\Source.cpp was modified at 3/10/2021 10:56:14 AM.
+         Outputs for C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\SOURCE.CPP:
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ
+         Write Tracking Logs:
+         	x64\Debug\Project1.tlog\CL.write.1.tlog
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=2052
+           VS_UNICODE_OUTPUT=1392
          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\CL.exe /c /I"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\include" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc142.pdb" /Gd /TP /FC /errorReport:prompt Source.cpp
          Tracking command:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.tlog /r C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\SOURCE.CPP /b MSBuildConsole_CancelEvent836023cabd5c406793258f630e754745  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\CL.exe"  /c /I"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\include" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc142.pdb" /Gd /TP /FC /errorReport:prompt Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.tlog /r C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\SOURCE.CPP /b MSBuildConsole_CancelEventad8d87a789b54b889c3c2b931a796c78  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\CL.exe"  /c /I"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\include" /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /permissive- /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc142.pdb" /Gd /TP /FC /errorReport:prompt Source.cpp
          Source.cpp
        Done executing task "CL".
      1>Done building target "ClCompile" in project "Project1.vcxproj".
@@ -1401,11 +1406,43 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
      1>Target "Link" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets" from project "C:\Repos\2DCalibrationInterpolation\GSL\Project1\Project1.vcxproj" (target "_Link" depends on it):
        Using "Link" task from assembly "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.Build.CppTasks.Common.dll".
        Task "Link"
+         Write Tracking Logs:
+         	x64\Debug\Project1.tlog\link.write.1.tlog
+         Read Tracking Logs:
+         	x64\Debug\Project1.tlog\link.read.1.tlog
+         Outputs for C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ:
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\PROJECT1.EXE
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\PROJECT1.ILK
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\PROJECT1.PDB
+         Inputs for C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ:
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\KERNEL32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\USER32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\GDI32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\WINSPOOL.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\COMDLG32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\ADVAPI32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\SHELL32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\OLE32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\OLEAUT32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\UUID.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\ODBC32.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UM\X64\ODBCCP32.LIB
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\DEV\VCPKG\INSTALLED\X64-WINDOWS\DEBUG\LIB\GSLCBLASD.LIB
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\DEV\VCPKG\INSTALLED\X64-WINDOWS\DEBUG\LIB\GSLD.LIB
+         	C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ
+         	C:\WINDOWS\SYSTEM32\TZRES.DLL
+         	C:\WINDOWS\GLOBALIZATION\SORTING\SORTDEFAULT.NLS
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.28.29910\LIB\X64\MSVCPRTD.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.28.29910\LIB\X64\MSVCRTD.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.28.29910\LIB\X64\OLDNAMES.LIB
+         	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2019\COMMUNITY\VC\TOOLS\MSVC\14.28.29910\LIB\X64\VCRUNTIMED.LIB
+         	C:\PROGRAM FILES (X86)\WINDOWS KITS\10\LIB\10.0.19041.0\UCRT\X64\UCRTD.LIB
+         Source compilation required: input C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ is newer than output C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\PROJECT1.PDB.
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=2556
+           VS_UNICODE_OUTPUT=2888
          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib" /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.lib" /MACHINE:X64 x64\Debug\Source.obj
          Tracking command:
-         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.tlog /r C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ /b MSBuildConsole_CancelEvent8ce2d40a7d464876b4cab8fe1d4e390b  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib" /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.lib" /MACHINE:X64 x64\Debug\Source.obj
+         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\15.0\FileTracker\FileTracker32.dll" /i C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.tlog /r C:\REPOS\2DCALIBRATIONINTERPOLATION\GSL\PROJECT1\X64\DEBUG\SOURCE.OBJ /b MSBuildConsole_CancelEvent6fc246431b384c4eb3589fff02b6bca2  /c "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\bin\HostX86\x64\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib" /LIBPATH:"C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\manual-link" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "C:\Repos\2DCalibrationInterpolation\GSL\DEV\vcpkg\scripts\buildsystems\msbuild\..\..\..\installed\x64-windows\debug\lib\*.lib" /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.lib" /MACHINE:X64 x64\Debug\Source.obj
        Done executing task "Link".
        Task "Message"
          Project1.vcxproj -> C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe
@@ -1539,11 +1576,11 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
      1>Target "_CopyFilesMarkedCopyLocal" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets" from project "C:\Repos\2DCalibrationInterpolation\GSL\Project1\Project1.vcxproj" (target "CopyFilesToOutputDirectory" depends on it):
        Using "Copy" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
        Task "Copy"
-         Did not copy from file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll" to file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll" because the "SkipUnchangedFiles" parameter was set to "true" in the project and the files' sizes and timestamps match.
          Did not copy from file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gslcblasd.dll" to file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gslcblasd.dll" because the "SkipUnchangedFiles" parameter was set to "true" in the project and the files' sizes and timestamps match.
+         Did not copy from file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll" to file "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll" because the "SkipUnchangedFiles" parameter was set to "true" in the project and the files' sizes and timestamps match.
        Done executing task "Copy".
        Task "Touch"
-         Creating "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.vcxproj.CopyComplete" because "AlwaysCreate" was specified.
+         Touching "C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.vcxproj.CopyComplete".
        Done executing task "Touch".
      1>Done building target "_CopyFilesMarkedCopyLocal" in project "Project1.vcxproj".
        Target "AssignTargetPaths" skipped. Previously built successfully.
@@ -1639,12 +1676,12 @@ Logging verbosity is set to: Detailed.     1>Project "C:\Repos\2DCalibrationInte
        Task "FindUnderPath"
          Comparison path is "x64\Debug\".
        Done executing task "FindUnderPath".
+       Using "Delete" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
        Task "Delete"
        Done executing task "Delete".
        Task "RemoveDuplicates"
        Done executing task "RemoveDuplicates".
-       Task "WriteLinesToFile"
-       Done executing task "WriteLinesToFile".
+       Task "WriteLinesToFile" skipped, due to false condition; ('@(_CleanUnfilteredPriorFileWrites)'!='@(_CleanUniqueRemainingFileWritesAfterIncrementalClean)') was evaluated as ('C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.vcxproj.CopyComplete;C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe;C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll;...'!='C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.vcxproj.CopyComplete;C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\Project1.exe;C:\Repos\2DCalibrationInterpolation\GSL\Project1\x64\Debug\gsld.dll;...').
      1>Done building target "IncrementalClean" in project "Project1.vcxproj".
      1>Target "FinalizeBuildStatus" in file "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets" from project "C:\Repos\2DCalibrationInterpolation\GSL\Project1\Project1.vcxproj" (target "Build" depends on it):
        Task "Delete"
@@ -1664,4 +1701,4 @@ Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.87
+Time Elapsed 00:00:01.45
