@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Test
@@ -20,12 +14,8 @@ namespace Test
             LoadPositons();
         }
 
-        private List<double> _X = new List<double>();
-        private List<double> _Y = new List<double>();
-        private List<double> _Z = new List<double>();
-        private List<double> _Zo = new List<double>();
-        private alglib.spline2dinterpolant ZSpline = new alglib.spline2dinterpolant();
-        private alglib.spline2dinterpolant ZoSpline = new alglib.spline2dinterpolant();
+        private List<double> _X = new List<double>(), _Y = new List<double>(), _Z = new List<double>(), _Zo = new List<double>();
+        private alglib.spline2dinterpolant ZSpline, ZoSpline = new alglib.spline2dinterpolant();
         private bool _Loaded = false;
 
         private void LoadPositons()
@@ -35,15 +25,16 @@ namespace Test
             while ((line = file.ReadLine()) != null)
             {
                 string[] data = line.Split(',');
-                if (!_X.Contains(double.Parse(data[0])))
+                if (!_X.Contains(double.Parse(data[0]))) // Easy way to limit _X to grid values
                     _X.Add(double.Parse(data[0]));
-                if (!_Y.Contains(double.Parse(data[1])))
+                if (!_Y.Contains(double.Parse(data[1]))) // Easy way to limit _Y to grid values
                     _Y.Add(double.Parse(data[1]));
                 _Z.Add(double.Parse(data[2]));
                 _Zo.Add(double.Parse(data[5]));
             }
             file.Close();
 
+            // Don't let use go into "uncharted" territory
             numX.Minimum = (decimal)_X.Min();
             numX.Maximum = (decimal)_X.Max();
             numY.Minimum = (decimal)_Y.Min();
@@ -62,19 +53,24 @@ namespace Test
 
         private void num_Changed(object sender, EventArgs e)
         {
-            if (!_Loaded)
-                return;
+            if (!_Loaded) 
+                return; // Will come here on form init
             updateAll();
         }
 
         private void updateAll()
         {
+            // Get interpolated position
             double vZ = alglib.spline2dcalc(ZSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
             double vZo = alglib.spline2dcalc(ZoSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
+
+            // Round and calc offset vals
             vZ = Math.Round(vZ, 3);
             double vZOff = Math.Round((vZ - _Z.Min()) * -1, 3);
             vZo = Math.Round(vZo, 3);
             double vZoOff = Math.Round((vZo - _Zo.Min()) * -1, 3);
+
+            // Set labels
             lblZ.Text = vZ.ToString();
             lblZOffset.Text = vZOff.ToString();
             lblZo.Text = vZo.ToString();
