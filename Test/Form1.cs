@@ -20,23 +20,27 @@ namespace Test
             LoadPositons();
         }
 
-        private Point _Max = new Point(500, 500);
         private List<double> _X = new List<double>();
         private List<double> _Y = new List<double>();
         private List<double> _Z = new List<double>();
         private List<double> _Zo = new List<double>();
+        private alglib.spline2dinterpolant ZSpline = new alglib.spline2dinterpolant();
+        private alglib.spline2dinterpolant ZoSpline = new alglib.spline2dinterpolant();
         private bool _Loaded = false;
+        
 
         private void LoadPositons()
         {
             string line;
             int idx = 0;
-            System.IO.StreamReader file = new System.IO.StreamReader("PositionMemory.txt");
+            StreamReader file = new StreamReader("PositionMemory.txt");
             while ((line = file.ReadLine()) != null)
             {
                 string[] data = line.Split(',');
-                _X.Add(double.Parse(data[0]));
-                _Y.Add(double.Parse(data[1]));
+                if (!_X.Contains(double.Parse(data[0])))
+                    _X.Add(double.Parse(data[0]));
+                if (!_Y.Contains(double.Parse(data[1])))
+                    _Y.Add(double.Parse(data[1]));
                 _Z.Add(double.Parse(data[2]));
                 _Zo.Add(double.Parse(data[5]));
                 idx++;
@@ -48,6 +52,8 @@ namespace Test
             numY.Minimum = (decimal)_Y.Min();
             numY.Maximum = (decimal)_Y.Max();
 
+            alglib.spline2dbuildbicubicv(_X.ToArray(), 2, _Y.ToArray(), 2, _Z.ToArray(), 1, out ZSpline);
+            alglib.spline2dbuildbicubicv(_X.ToArray(), 2, _Y.ToArray(), 2, _Zo.ToArray(), 1, out ZoSpline);
             _Loaded = true;
             updateAll();
         }
@@ -61,61 +67,16 @@ namespace Test
 
         private void updateAll()
         {
-            lblZ.Text = getZ().ToString();
-            lblZOffset.Text = getZOffset().ToString();
-            lblZo.Text = getZo().ToString();
-            lblZoOffset.Text = getZoOffset().ToString();
-        }
-
-        private double getZ()
-        {
-            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                                                _Max.X, _Max.Y, numX.Value, numY.Value,
-                                                _Z[0], _Z[1], _Z[2], _Z[3], 0));
-            return double.Parse(val);
-        }
-
-        private double getZOffset()
-        {
-            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                                               _Max.X, _Max.Y, numX.Value, numY.Value,
-                                               _Z[0], _Z[1], _Z[2], _Z[3], 1));
-            return double.Parse(val);
-        }
-
-        private double getZo()
-        {
-            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                                               _Max.X, _Max.Y, numX.Value, numY.Value,
-                                               _Zo[0], _Zo[1], _Zo[2], _Zo[3], 0));
-            return double.Parse(val);
-        }
-
-        private double getZoOffset()
-        {
-            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
-                                               _Max.X, _Max.Y, numX.Value, numY.Value,
-                                               _Zo[0], _Zo[1], _Zo[2], _Zo[3], 1));
-            return double.Parse(val);
-        }
-
-        private string interpx(string args)
-        {
-            var proc = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "Properties/interpx/interpx.exe",
-                    Arguments = args,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
-            };
-
-            proc.Start();
-            string line = proc.StandardOutput.ReadLine();
-            return line;
+            double vZ = alglib.spline2dcalc(ZSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
+            double vZo = alglib.spline2dcalc(ZoSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
+            vZ = Math.Round(vZ, 3);
+            double vZOff = Math.Round((vZ - _Z.Min()) * -1, 3);
+            vZo = Math.Round(vZo, 3);
+            double vZoOff = Math.Round((vZo - _Zo.Min()) * -1, 3);
+            lblZ.Text = vZ.ToString();
+            lblZOffset.Text = vZOff.ToString();
+            lblZo.Text = vZo.ToString();
+            lblZoOffset.Text = vZoOff.ToString();
         }
     }
 }
