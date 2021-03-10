@@ -34,10 +34,23 @@ int main(int argc, char** argv)
 	gsl_interp_accel* yacc = gsl_interp_accel_alloc();
 
 	/* set z grid values */
-	gsl_spline2d_set(spline, za, 0, 0, atof(argv[5]));
-	gsl_spline2d_set(spline, za, 0, 1, atof(argv[6]));
-	gsl_spline2d_set(spline, za, 1, 1, atof(argv[7]));
-	gsl_spline2d_set(spline, za, 1, 0, atof(argv[8]));
+	
+	double zVals[] = { atof(argv[5]), 
+					   atof(argv[6]), 
+					   atof(argv[7]),
+					   atof(argv[8]) };
+	double minZ = 0;
+	for (double z : zVals)
+	{
+		if (z < minZ) {
+			minZ = z;
+		}
+	}
+
+	gsl_spline2d_set(spline, za, 0, 0, zVals[0] - minZ);
+	gsl_spline2d_set(spline, za, 0, 1, zVals[1] - minZ);
+	gsl_spline2d_set(spline, za, 1, 1, zVals[2] - minZ);
+	gsl_spline2d_set(spline, za, 1, 0, zVals[3] - minZ);
 
 	/* initialize interpolation */
 	gsl_spline2d_init(spline, xa, ya, za, nx, ny);
@@ -46,7 +59,7 @@ int main(int argc, char** argv)
 	double xi = atof(argv[3]) / (Nx - 1.0);
 	double yj = atof(argv[4]) / (Ny - 1.0);
 	double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
-	printf("\n%f\n", zij);
+	printf("%f", zij * -1);
 	gsl_spline2d_free(spline);
 	gsl_interp_accel_free(xacc);
 	gsl_interp_accel_free(yacc);
