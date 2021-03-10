@@ -27,12 +27,10 @@ namespace Test
         private alglib.spline2dinterpolant ZSpline = new alglib.spline2dinterpolant();
         private alglib.spline2dinterpolant ZoSpline = new alglib.spline2dinterpolant();
         private bool _Loaded = false;
-        
 
         private void LoadPositons()
         {
             string line;
-            int idx = 0;
             StreamReader file = new StreamReader("PositionMemory.txt");
             while ((line = file.ReadLine()) != null)
             {
@@ -43,7 +41,6 @@ namespace Test
                     _Y.Add(double.Parse(data[1]));
                 _Z.Add(double.Parse(data[2]));
                 _Zo.Add(double.Parse(data[5]));
-                idx++;
             }
             file.Close();
 
@@ -52,8 +49,13 @@ namespace Test
             numY.Minimum = (decimal)_Y.Min();
             numY.Maximum = (decimal)_Y.Max();
 
-            alglib.spline2dbuildbicubicv(_X.ToArray(), 2, _Y.ToArray(), 2, _Z.ToArray(), 1, out ZSpline);
-            alglib.spline2dbuildbicubicv(_X.ToArray(), 2, _Y.ToArray(), 2, _Zo.ToArray(), 1, out ZoSpline);
+            // Length of _Z and _Zo need to equal the length of _X times the length of _Y
+            // len(_Z) == len(_Zo) == len(_X) * len(_Y)
+            // Define the grid and init the bicubic splines interpolant
+
+            alglib.spline2dbuildbicubicv(_X.ToArray(), _X.Count(), _Y.ToArray(), _Y.Count(), _Z.ToArray(), 1, out ZSpline);
+            alglib.spline2dbuildbicubicv(_X.ToArray(), _X.Count(), _Y.ToArray(), _Y.Count(), _Zo.ToArray(), 1, out ZoSpline);
+
             _Loaded = true;
             updateAll();
         }
