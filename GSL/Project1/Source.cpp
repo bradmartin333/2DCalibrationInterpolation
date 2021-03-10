@@ -1,48 +1,59 @@
-#include <iostream>
-#include <gsl/gsl_linalg.h>
+#include <iostream> 
+#include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-	double A_data[] = {
-		0.57092943, 0.00313503, 0.88069151, 0.39626474,
-		0.33336008, 0.01876333, 0.12228647, 0.40085702,
-		0.55534451, 0.54090141, 0.85848041, 0.62154911,
-		0.64111484, 0.8892682 , 0.58922332, 0.32858322
-	};
+#include <gsl/gsl_math.h>
+#include <gsl/gsl_interp2d.h>
+#include <gsl/gsl_spline2d.h>
 
-	double b_data[] = {
-		1.5426693 , 0.74961678, 2.21431998, 2.14989419
-	};
+int main(int argc, char** argv) 
+{
+	const gsl_interp2d_type* T = gsl_interp2d_bilinear;
+	const size_t N = 100;			  /* number of points to interpolate */
+	const double xa[] = { 0.0, 1.0 }; /* define unit square */
+	const double ya[] = { 0.0, 1.0 };
+	const size_t nx = sizeof(xa) / sizeof(double); /* x grid points */
+	const size_t ny = sizeof(ya) / sizeof(double); /* y grid points */
+	double* za = (double*)malloc(nx * ny * (int)sizeof(double));
+	gsl_spline2d* spline = gsl_spline2d_alloc(T, nx, ny);
+	gsl_interp_accel *xacc = gsl_interp_accel_alloc();
+	gsl_interp_accel* yacc = gsl_interp_accel_alloc();
+	double i, j;
 
-	// Access the above C arrays through GSL views
-	gsl_matrix_view A = gsl_matrix_view_array(A_data, 4, 4);
-	gsl_vector_view b = gsl_vector_view_array(b_data, 4);
+	/* set z grid values */
+	gsl_spline2d_set(spline, za, 0, 0, 0.0);
+	gsl_spline2d_set(spline, za, 0, 1, 1.0);
+	gsl_spline2d_set(spline, za, 1, 1, 0.5);
+	gsl_spline2d_set(spline, za, 1, 0, 1.0);
 
-	// Print the values of A and b using GSL print functions
-	std::cout << "A = \n";
-	gsl_matrix_fprintf(stdout, &A.matrix, "%lf");
+	/* initialize interpolation */
+	gsl_spline2d_init(spline, xa, ya, za, nx, ny);
 
-	std::cout << "\nb = \n";
-	gsl_vector_fprintf(stdout, &b.vector, "%lf");
+	/* interpolate N values in x and y and print out grid for plotting */
+	for (i = 0; i < N; ++i)
+	{
+		double xi = i / (N - 1.0);
 
-	// Allocate memory for the solution vector x and the permutation perm:
-	gsl_vector * x = gsl_vector_alloc(4);
-	gsl_permutation * perm = gsl_permutation_alloc(4);
+		for (j = 0; j < N; ++j)
+		{
+			double yj = j / (N - 1.0);
+			double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
 
-	// Decompose A into the LU form:
-	int signum;
-	gsl_linalg_LU_decomp(&A.matrix, perm, &signum);
+			printf("%f %f %f\n", xi, yj, zij);
+		}
+		printf("\n");
+	}
 
-	// Solve the linear system
-	gsl_linalg_LU_solve(&A.matrix, perm, &b.vector, x);
+	gsl_spline2d_free(spline);
+	gsl_interp_accel_free(xacc);
+	gsl_interp_accel_free(yacc);
+	free(za);
+	
+	std::cout << "You have entered " << argc
+		<< " arguments:" << "\n";
 
-	// Print the solution
-	std::cout << "\nx = \n";
-	gsl_vector_fprintf(stdout, x, "%lf");
+	for (int i = 0; i < argc; ++i)
+		std::cout << argv[i] << "\n";
 
-	// Release the memory previously allocated for x and perm
-	gsl_vector_free(x);
-	gsl_permutation_free(perm);
-
-	std::cin.get();
 	return 0;
 }
