@@ -33,12 +33,13 @@ int main(int argc, char** argv)
 	gsl_interp_accel *xacc = gsl_interp_accel_alloc();
 	gsl_interp_accel* yacc = gsl_interp_accel_alloc();
 
-	/* set z grid values */
-	
+	/* get z grid values */
 	double zVals[] = { atof(argv[5]), 
 					   atof(argv[6]), 
 					   atof(argv[7]),
 					   atof(argv[8]) };
+
+	/* get min z value */
 	double minZ = 0;
 	for (double z : zVals)
 	{
@@ -47,6 +48,7 @@ int main(int argc, char** argv)
 		}
 	}
 
+	/* set grid z values */
 	gsl_spline2d_set(spline, za, 0, 0, zVals[0] - minZ);
 	gsl_spline2d_set(spline, za, 0, 1, zVals[1] - minZ);
 	gsl_spline2d_set(spline, za, 1, 1, zVals[2] - minZ);
