@@ -6,7 +6,7 @@
 #include <gsl/gsl_spline2d.h>
 
 /*
-	./interpx.exe {1} {2} {3} {4} {5} {6} {7}
+	./interpx.exe {0} {1} {2} {3} {4} {5} {6} {7} {8}
 	{0} = xRange of measurements
 	{1} = yRange of measurements
 	{2} = X coordinate of interest
@@ -15,6 +15,7 @@
 	{5] = NW z measurement
 	{6] = NE z measurement
 	{7] = SE z measurement
+	{8} = 1 for offset value, 0 for position
 */
 
 int main(int argc, char** argv) 
@@ -48,20 +49,39 @@ int main(int argc, char** argv)
 		}
 	}
 
+	double offset = atof(argv[9]);
+	if (offset == 1)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			zVals[i] -= minZ;
+		}
+	}
+
 	/* set grid z values */
-	gsl_spline2d_set(spline, za, 0, 0, zVals[0] - minZ);
-	gsl_spline2d_set(spline, za, 0, 1, zVals[1] - minZ);
-	gsl_spline2d_set(spline, za, 1, 1, zVals[2] - minZ);
-	gsl_spline2d_set(spline, za, 1, 0, zVals[3] - minZ);
+	gsl_spline2d_set(spline, za, 0, 0, zVals[0]);
+	gsl_spline2d_set(spline, za, 0, 1, zVals[1]);
+	gsl_spline2d_set(spline, za, 1, 1, zVals[2]);
+	gsl_spline2d_set(spline, za, 1, 0, zVals[3]);
 
 	/* initialize interpolation */
 	gsl_spline2d_init(spline, xa, ya, za, nx, ny);
 
-	/* interpolate and print */
-	double xi = atof(argv[3]) / (Nx - 1.0);
-	double yj = atof(argv[4]) / (Ny - 1.0);
+	/* interpolate */
+	double xi = atof(argv[3]) / Nx;
+	double yj = atof(argv[4]) / Ny;
 	double zij = gsl_spline2d_eval(spline, xi, yj, xacc, yacc);
-	printf("%f", zij * -1);
+
+	/* output */
+	if (offset == 1)
+	{
+		printf("%f", zij * -1);
+	}
+	else
+	{
+		printf("%f", zij);
+	}
+	
 	gsl_spline2d_free(spline);
 	gsl_interp_accel_free(xacc);
 	gsl_interp_accel_free(yacc);

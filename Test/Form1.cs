@@ -18,16 +18,14 @@ namespace Test
         {
             InitializeComponent();
             LoadPositons();
-            CalculateDeltas();
-            Interpolate();
         }
 
-        private Point _Min = new Point(0, 0);
         private Point _Max = new Point(500, 500);
         private List<double> _X = new List<double>();
         private List<double> _Y = new List<double>();
         private List<double> _Z = new List<double>();
         private List<double> _Zo = new List<double>();
+        private bool _Loaded = false;
 
         private void LoadPositons()
         {
@@ -44,39 +42,80 @@ namespace Test
                 idx++;
             }
             file.Close();
+
+            numX.Minimum = (decimal)_X.Min();
+            numX.Maximum = (decimal)_X.Max();
+            numY.Minimum = (decimal)_Y.Min();
+            numY.Maximum = (decimal)_Y.Max();
+
+            _Loaded = true;
+            updateAll();
         }
 
-        private void CalculateDeltas()
+        private void num_Changed(object sender, EventArgs e)
         {
-            double minZ = _Z.Min();
-            double minZo = _Zo.Min();
-            for (int i = 0; i<_X.Count; i++)
-            {
-                _Z[i] -= minZ;
-                _Zo[i] -= minZo;
-            }
+            if (!_Loaded)
+                return;
+            updateAll();
         }
 
-        private void Interpolate()
+        private void updateAll()
         {
-            MathNet.Numerics.Interpolation.IInterpolation Xinterpolation = MathNet.Numerics.Interpolate.Linear(_X, _Zo);
-            MathNet.Numerics.Interpolation.IInterpolation Yinterpolation = MathNet.Numerics.Interpolate.Linear(_Y, _Zo);
-            using (StreamWriter sw = File.CreateText("CSoutput.txt"))
+            lblZ.Text = getZ().ToString();
+            lblZOffset.Text = getZOffset().ToString();
+            lblZo.Text = getZo().ToString();
+            lblZoOffset.Text = getZoOffset().ToString();
+        }
+
+        private double getZ()
+        {
+            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                                                _Max.X, _Max.Y, numX.Value, numY.Value,
+                                                _Z[0], _Z[1], _Z[2], _Z[3], 0));
+            return double.Parse(val);
+        }
+
+        private double getZOffset()
+        {
+            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                                               _Max.X, _Max.Y, numX.Value, numY.Value,
+                                               _Z[0], _Z[1], _Z[2], _Z[3], 1));
+            return double.Parse(val);
+        }
+
+        private double getZo()
+        {
+            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                                               _Max.X, _Max.Y, numX.Value, numY.Value,
+                                               _Zo[0], _Zo[1], _Zo[2], _Zo[3], 0));
+            return double.Parse(val);
+        }
+
+        private double getZoOffset()
+        {
+            string val = interpx(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8}",
+                                               _Max.X, _Max.Y, numX.Value, numY.Value,
+                                               _Zo[0], _Zo[1], _Zo[2], _Zo[3], 1));
+            return double.Parse(val);
+        }
+
+        private string interpx(string args)
+        {
+            var proc = new Process
             {
-                for (int i = _Min.X; i <= _Max.X; i += 5)
+                StartInfo = new ProcessStartInfo
                 {
-                    for (int j = _Min.Y; j < _Max.Y; j += 5)
-                    {
-                        double Xvalue = Xinterpolation.Interpolate(i);
-                        if (Xvalue == double.NegativeInfinity)
-                            Xvalue = 0;
-                        double Yvalue = Yinterpolation.Interpolate(j);
-                        if (Yvalue == double.NegativeInfinity)
-                            Yvalue = 0;
-                        sw.WriteLine(string.Format("{0}{1}{2}{3}{4}", i, '\t', j, '\t', (Xvalue + Yvalue) / 2));
-                    }
+                    FileName = "Properties/interpx/interpx.exe",
+                    Arguments = args,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
                 }
-            }
+            };
+
+            proc.Start();
+            string line = proc.StandardOutput.ReadLine();
+            return line;
         }
     }
 }
