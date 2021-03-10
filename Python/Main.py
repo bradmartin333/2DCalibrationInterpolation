@@ -22,7 +22,7 @@ optics = True
 x = []
 y = []
 z = []
-with open('PositionMemory.txt') as data:
+with open("Python/PositionMemory.txt") as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
