@@ -13,3 +13,6 @@ method: https://www.alglib.net/translator/man/manual.csharp.html#struct_spline2d
 
 ### C# ver2: Now with one simple function instead of any .dlls (relies on Algebra!!!)
 method: https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
+
+### F#: Move algebra function into a dll
+method: Init Grid, then Interp2d
