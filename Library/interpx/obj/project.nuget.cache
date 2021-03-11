@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zoV7OITfRfBTwBpg98iMHLZFvQhdIysBU2pnNUMo/ovoedyWWcLNa5DB006Jj367KGASzs1C4mQFtrIFEDxogA==",
+  "success": true,
+  "projectFilePath": "C:\\Repos\\2DCalibrationInterpolation\\Library\\interpx\\interpx.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dingo\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

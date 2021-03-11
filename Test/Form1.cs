@@ -5,7 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static Test.Interpolator;
+using interpx;
 
 namespace Test
 {
@@ -18,6 +18,7 @@ namespace Test
         }
 
         private List<double> _X = new List<double>(), _Y = new List<double>(), _Zo = new List<double>();
+        private Interp2D.Grid ZoGrid;
         private bool _Loaded = false;
 
         private void LoadPositons()
@@ -45,6 +46,7 @@ namespace Test
 
             // Length of _Z and _Zo need to equal the length of _X times the length of _Y
             // len(_Z) == len(_Zo) == len(_X) * len(_Y)
+            ZoGrid = new Interp2D.Grid(_Zo[2], _Zo[0], _Zo[1], _Zo[3], _X.Max(), _X.Min(), _Y.Max(), _Y.Min());
 
             _Loaded = true;
             MakePlots();
@@ -61,7 +63,7 @@ namespace Test
         private void updateAll()
         {
             // Get interpolated position
-            double vZo = bilinearInterpolation(_Zo[1], _Zo[3], _Zo[0], _Zo[2], _X[1], _X[0], _Y[0], _Y[1], decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
+            double vZo = Interp2D.Get(ZoGrid, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
 
             // Round and calc offset val
             vZo = Math.Round(vZo, 3);
@@ -132,7 +134,7 @@ namespace Test
             {
                 for (int j = 0; j < xs.Length; j++)
                 {
-                    Zos[i, j] = bilinearInterpolation(_Zo[1], _Zo[3], _Zo[0], _Zo[2], _X[1], _X[0], _Y[0], _Y[1], j, i);
+                    Zos[i, j] = Interp2D.Get(ZoGrid, j, i);
                 }
             }
 

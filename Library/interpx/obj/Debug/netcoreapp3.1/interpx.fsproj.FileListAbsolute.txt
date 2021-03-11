@@ -1,0 +1,8 @@
+C:\Repos\2DCalibrationInterpolation\Library\interpx\bin\Debug\netcoreapp3.1\interpx.deps.json
+C:\Repos\2DCalibrationInterpolation\Library\interpx\bin\Debug\netcoreapp3.1\interpx.dll
+C:\Repos\2DCalibrationInterpolation\Library\interpx\bin\Debug\netcoreapp3.1\interpx.pdb
+C:\Repos\2DCalibrationInterpolation\Library\interpx\obj\Debug\netcoreapp3.1\interpx.fsprojAssemblyReference.cache
+C:\Repos\2DCalibrationInterpolation\Library\interpx\obj\Debug\netcoreapp3.1\interpx.AssemblyInfoInputs.cache
+C:\Repos\2DCalibrationInterpolation\Library\interpx\obj\Debug\netcoreapp3.1\interpx.AssemblyInfo.fs
+C:\Repos\2DCalibrationInterpolation\Library\interpx\obj\Debug\netcoreapp3.1\interpx.dll
+C:\Repos\2DCalibrationInterpolation\Library\interpx\obj\Debug\netcoreapp3.1\interpx.pdb
