@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj": {}
+    "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj": {}
   },
   "projects": {
-    "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj": {
+    "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
+        "projectUniqueName": "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
         "projectName": "Test",
-        "projectPath": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
-        "packagesPath": "C:\\Users\\space\\.nuget\\packages\\",
-        "outputPath": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\obj\\",
+        "projectPath": "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
+        "packagesPath": "C:\\Users\\dingo\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\2DCalibrationInterpolation\\Test\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\space\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dingo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -125,12 +125,12 @@ namespace Test
                 for (int x = 0; x < Zos.GetLength(0); x++)
                     for (int y = 0; y < Zos.GetLength(1); y++)
                     {
-                        int lux = (int)((Zos[x, y] - _Zo.Max()) / (_Zo.Max() - _Zo.Min()) * 255);
+                        double lux = ((Zos[x, y] - _Zo.Max()) / (_Zo.Max() - _Zo.Min()));
                         if (lux < 0)
                             lux = 0;
                         if (lux > 255)
                             lux = 255;
-                        using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, lux, lux, lux)))
+                        using (SolidBrush brush = new SolidBrush(Lux2Color(lux)))
                             G.FillRectangle(brush, x * w, y * h, w, h);
                     }
             }
@@ -166,6 +166,59 @@ namespace Test
                 pos.X /= (float)scale;
             }
             return pos;
+        }
+
+        public static Color Lux2Color(double lux)
+        {
+            double r = 0.5;
+            double g = 0.5;
+            double b = 0.5;
+            double v = 0.75;
+            if (v > 0)
+            {
+                double m = 1 - v;
+                double sv = (v - m) / v;
+                lux *= 6.0;
+                int sextant = (int)lux;
+                double fract = lux - sextant;
+                double vsf = v * sv * fract;
+                double mid1 = m + vsf;
+                double mid2 = v - vsf;
+                switch (sextant)
+                {
+                    case 0:
+                        r = v;
+                        g = mid1;
+                        b = m;
+                        break;
+                    case 1:
+                        r = mid2;
+                        g = v;
+                        b = m;
+                        break;
+                    case 2:
+                        r = m;
+                        g = v;
+                        b = mid1;
+                        break;
+                    case 3:
+                        r = m;
+                        g = mid2;
+                        b = v;
+                        break;
+                    case 4:
+                        r = mid1;
+                        g = m;
+                        b = v;
+                        break;
+                    case 5:
+                        r = v;
+                        g = m;
+                        b = mid2;
+                        break;
+                }
+            }
+            return Color.FromArgb(255, Convert.ToByte(r * 255.0f), Convert.ToByte(g * 255.0f), Convert.ToByte(b * 255.0f));
         }
     }
 }
