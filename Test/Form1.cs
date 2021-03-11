@@ -94,7 +94,11 @@ namespace Test
             Bitmap bmpZo = new Bitmap(pbxZo.BackgroundImage.Width, pbxZo.BackgroundImage.Height);
             using (Graphics G = Graphics.FromImage(bmpZo))
             {
-                using (SolidBrush brush = new SolidBrush(Color.HotPink))
+                using (SolidBrush brush = new SolidBrush(Color.White))
+                    G.FillRectangle(brush, (int)((double)numX.Value - bmpZo.Width / 70 - _X.Min()),
+                                           (int)((double)numY.Value - bmpZo.Height / 70 - _Y.Min()),
+                                           bmpZo.Width / 35, bmpZo.Height / 35);
+                using (SolidBrush brush = new SolidBrush(Color.Black))
                     G.FillRectangle(brush, (int)((double)numX.Value - bmpZo.Width / 100 - _X.Min()),
                                            (int)((double)numY.Value - bmpZo.Height / 100 - _Y.Min()),
                                            bmpZo.Width / 50, bmpZo.Height / 50);
