@@ -166,7 +166,6 @@ namespace Test
             // 
             this.pbxZo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pbxZo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbxZo.Image = global::Test.Properties.Resources.clickhere;
             this.pbxZo.Location = new System.Drawing.Point(219, 3);
             this.pbxZo.Name = "pbxZo";
             this.tableLayoutPanel1.SetRowSpan(this.pbxZo, 4);
@@ -175,6 +174,8 @@ namespace Test
             this.pbxZo.TabIndex = 13;
             this.pbxZo.TabStop = false;
             this.pbxZo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
+            this.pbxZo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
+            this.pbxZo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
             // 
             // Form1
             // 

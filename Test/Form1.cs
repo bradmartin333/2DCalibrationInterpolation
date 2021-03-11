@@ -59,7 +59,6 @@ namespace Test
             if (!_Loaded) 
                 return; // Will come here on form init
             updateAll();
-            MakeCursor();
         }
 
         private void updateAll()
@@ -74,6 +73,8 @@ namespace Test
             // Set labels
             lblZo.Text = vZo.ToString();
             lblZoOffset.Text = vZoOff.ToString();
+
+            MakeCursor();
         }
 
         //
@@ -82,10 +83,27 @@ namespace Test
 
         private void pbxZo_Click(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.None)
+                return;
+
             PointF click = ZoomMousePos(new Point(e.X, e.Y), pbxZo);
             PointF clickRatio = new PointF(click.X / pbxZo.BackgroundImage.Width, click.Y / pbxZo.BackgroundImage.Height);
-            numX.Value = (decimal)(_X.Max() - (clickRatio.X * (_X.Max() - _X.Min())));
-            numY.Value = (decimal)(_Y.Min() + (clickRatio.Y * (_Y.Max() - _Y.Min())));
+
+            decimal thisX = (decimal)(_X.Max() - (clickRatio.X * (_X.Max() - _X.Min())));
+            decimal thisY = (decimal)(_Y.Min() + (clickRatio.Y * (_Y.Max() - _Y.Min())));
+
+            if (thisX < numX.Minimum)
+                thisX = numX.Minimum;
+            if (thisX > numX.Maximum)
+                thisX = numX.Maximum;
+            if (thisY < numY.Minimum)
+                thisY = numY.Minimum;
+            if (thisY > numY.Maximum)
+                thisY = numY.Maximum;
+
+            numX.Value = thisX;
+            numY.Value = thisY;
+
             MakeCursor();
         }
 
