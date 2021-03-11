@@ -16,8 +16,8 @@ namespace Test
             LoadPositons();
         }
 
-        private List<double> _X = new List<double>(), _Y = new List<double>(), _Z = new List<double>(), _Zo = new List<double>();
-        private alglib.spline2dinterpolant ZSpline, ZoSpline = new alglib.spline2dinterpolant();
+        private List<double> _X = new List<double>(), _Y = new List<double>(), _Zo = new List<double>();
+        private alglib.spline2dinterpolant ZoSpline = new alglib.spline2dinterpolant();
         private bool _Loaded = false;
 
         private void LoadPositons()
@@ -31,7 +31,6 @@ namespace Test
                     _X.Add(double.Parse(data[0]));
                 if (!_Y.Contains(double.Parse(data[1]))) // Easy way to limit _Y to grid values
                     _Y.Add(double.Parse(data[1]));
-                _Z.Add(double.Parse(data[2]));
                 _Zo.Add(double.Parse(data[5]));
             }
             file.Close();
@@ -48,7 +47,6 @@ namespace Test
             // len(_Z) == len(_Zo) == len(_X) * len(_Y)
             // Define the grid and init the bicubic splines interpolant
 
-            alglib.spline2dbuildbicubicv(_X.ToArray(), _X.Count(), _Y.ToArray(), _Y.Count(), _Z.ToArray(), 1, out ZSpline);
             alglib.spline2dbuildbicubicv(_X.ToArray(), _X.Count(), _Y.ToArray(), _Y.Count(), _Zo.ToArray(), 1, out ZoSpline);
 
             _Loaded = true;
@@ -61,49 +59,47 @@ namespace Test
             if (!_Loaded) 
                 return; // Will come here on form init
             updateAll();
+            MakeCursor();
         }
 
         private void updateAll()
         {
             // Get interpolated position
-            double vZ = alglib.spline2dcalc(ZSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
             double vZo = alglib.spline2dcalc(ZoSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
 
-            // Round and calc offset vals
-            vZ = Math.Round(vZ, 3);
-            double vZOff = Math.Round((vZ - _Z.Min()) * -1, 3);
+            // Round and calc offset val
             vZo = Math.Round(vZo, 3);
             double vZoOff = Math.Round((vZo - _Zo.Min()) * -1, 3);
 
             // Set labels
-            lblZ.Text = vZ.ToString();
-            lblZOffset.Text = vZOff.ToString();
             lblZo.Text = vZo.ToString();
             lblZoOffset.Text = vZoOff.ToString();
+        }
 
+        //
+        // Everything beyond here is for the heatmap
+        //
+
+        private void pbxZo_Click(object sender, MouseEventArgs e)
+        {
+            PointF click = ZoomMousePos(new Point(e.X, e.Y), pbxZo);
+            PointF clickRatio = new PointF(click.X / pbxZo.BackgroundImage.Width, click.Y / pbxZo.BackgroundImage.Height);
+            numX.Value = (decimal)(_X.Max() - (clickRatio.X * (_X.Max() - _X.Min())));
+            numY.Value = (decimal)(_Y.Min() + (clickRatio.Y * (_Y.Max() - _Y.Min())));
             MakeCursor();
         }
 
         private void MakeCursor()
         {
-            Bitmap bmpZ = (Bitmap)pbxZ.BackgroundImage.Clone();
-            using (Graphics G = Graphics.FromImage(bmpZ))
-            {
-                using (SolidBrush brush = new SolidBrush(Color.HotPink))
-                    G.FillRectangle(brush, (int)((double)numX.Value - bmpZ.Width/100 - _X.Min()), 
-                                           (int)((double)numY.Value - bmpZ.Height/100 - _Y.Min()),
-                                           bmpZ.Width / 50, bmpZ.Height / 50);
-            }
-            pbxZ.Image = bmpZ;
-
-            Bitmap bmpZo = (Bitmap)pbxZo.BackgroundImage.Clone();
+            Bitmap bmpZo = new Bitmap(pbxZo.BackgroundImage.Width, pbxZo.BackgroundImage.Height);
             using (Graphics G = Graphics.FromImage(bmpZo))
             {
                 using (SolidBrush brush = new SolidBrush(Color.HotPink))
-                    G.FillRectangle(brush, (int)((double)numX.Value - bmpZ.Width / 100 - _X.Min()),
-                                           (int)((double)numY.Value - bmpZ.Height / 100 - _Y.Min()),
-                                           bmpZ.Width / 50, bmpZ.Height / 50);
+                    G.FillRectangle(brush, (int)((double)numX.Value - bmpZo.Width / 100 - _X.Min()),
+                                           (int)((double)numY.Value - bmpZo.Height / 100 - _Y.Min()),
+                                           bmpZo.Width / 50, bmpZo.Height / 50);
             }
+            bmpZo.RotateFlip(RotateFlipType.RotateNoneFlipX);
             pbxZo.Image = bmpZo;
         }
 
@@ -112,36 +108,14 @@ namespace Test
             int[] xs = Enumerable.Range((int)_X.Min(), (int)(_X.Max() - _X.Min())).ToArray();
             int[] ys = Enumerable.Range((int)_Y.Min(), (int)(_Y.Max() - _Y.Min())).ToArray();
 
-            double[,] Zs = new double[ys.Length, xs.Length];
             double[,] Zos = new double[ys.Length, xs.Length];
             for (int i = 0; i < ys.Length; i++)
             {
                 for (int j = 0; j < xs.Length; j++)
                 {
-                    Zs[i, j] = alglib.spline2dcalc(ZSpline, j, i);
                     Zos[i, j] = alglib.spline2dcalc(ZoSpline, j, i);
                 }
             }
-
-            Bitmap bmpZ = new Bitmap(xs.Length, ys.Length);
-            using (Graphics G = Graphics.FromImage(bmpZ))
-            {
-                float w = 1f * xs.Length / Zs.GetLength(0);
-                float h = 1f * ys.Length / Zs.GetLength(1);
-                for (int x = 0; x < Zs.GetLength(0); x++)
-                    for (int y = 0; y < Zs.GetLength(1); y++)
-                    {
-                        int lux = (int)((Zs[x, y] - _Z.Max()) / (_Z.Max() - _Z.Min()) * 255);
-                        if (lux < 0)
-                            lux = 0;
-                        if (lux > 255)
-                            lux = 255;
-                        using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, lux, lux, lux)))
-                            G.FillRectangle(brush, x * w, y * h, w, h);
-                    }
-            }
-            bmpZ.RotateFlip(RotateFlipType.RotateNoneFlipX);
-            pbxZ.BackgroundImage = bmpZ;
 
             Bitmap bmpZo = new Bitmap(xs.Length, ys.Length);
             using (Graphics G = Graphics.FromImage(bmpZo))
@@ -160,8 +134,38 @@ namespace Test
                             G.FillRectangle(brush, x * w, y * h, w, h);
                     }
             }
-            bmpZo.RotateFlip(RotateFlipType.RotateNoneFlipX);
+
             pbxZo.BackgroundImage = bmpZo;
+        }
+
+        public PointF ZoomMousePos(Point click, PictureBox pbx)
+        {
+            double imageAspect = pbx.BackgroundImage.Width / (double)pbx.BackgroundImage.Height;
+            double controlAspect = pbx.Width / (double)pbx.Height;
+            PointF pos = click;
+            if (imageAspect > controlAspect)
+            {
+                double ratioWidth = pbx.BackgroundImage.Width / (double)pbx.Width;
+                pos.X *= (float)ratioWidth;
+                double scale = pbx.Width / (double)pbx.BackgroundImage.Width;
+                double displayHeight = scale * pbx.BackgroundImage.Height;
+                double diffHeight = pbx.Height - displayHeight;
+                diffHeight /= 2;
+                pos.Y -= (float)diffHeight;
+                pos.Y /= (float)scale;
+            }
+            else
+            {
+                double ratioHeight = pbx.BackgroundImage.Height / (double)pbx.Height;
+                pos.Y *= (int)ratioHeight;
+                double scale = pbx.Height / (double)pbx.BackgroundImage.Height;
+                double displayWidth = scale * pbx.BackgroundImage.Width;
+                double diffWidth = pbx.Width - displayWidth;
+                diffWidth /= 2;
+                pos.X -= (float)diffWidth;
+                pos.X /= (float)scale;
+            }
+            return pos;
         }
     }
 }
