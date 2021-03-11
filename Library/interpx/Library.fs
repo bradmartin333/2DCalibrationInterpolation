@@ -1,6 +1,6 @@
 ﻿namespace interpx
 
-module Interp2D =
+module Bilinear =
     
     type Grid (sw:double, nw:double, ne:double, se:double, x1:double, x2:double, y1:double, y2:double) =
         member this.SW = sw
@@ -12,7 +12,7 @@ module Interp2D =
         member this.Y1 = y1
         member this.Y2 = y2
 
-    let Get (g:Grid, x:double, y:double) : double =
+    let Interp2D (g:Grid, x:double, y:double) : double =
         let x2x1 = g.X2 - g.X1
         let y2y1 = g.Y2 - g.Y1
         let x2x = g.X2 - x
