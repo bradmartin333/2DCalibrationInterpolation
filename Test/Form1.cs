@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static Test.Interpolator;
 
 namespace Test
 {
@@ -17,7 +18,6 @@ namespace Test
         }
 
         private List<double> _X = new List<double>(), _Y = new List<double>(), _Zo = new List<double>();
-        private alglib.spline2dinterpolant ZoSpline = new alglib.spline2dinterpolant();
         private bool _Loaded = false;
 
         private void LoadPositons()
@@ -45,9 +45,6 @@ namespace Test
 
             // Length of _Z and _Zo need to equal the length of _X times the length of _Y
             // len(_Z) == len(_Zo) == len(_X) * len(_Y)
-            // Define the grid and init the bicubic splines interpolant
-
-            alglib.spline2dbuildbicubicv(_X.ToArray(), _X.Count(), _Y.ToArray(), _Y.Count(), _Zo.ToArray(), 1, out ZoSpline);
 
             _Loaded = true;
             MakePlots();
@@ -64,7 +61,7 @@ namespace Test
         private void updateAll()
         {
             // Get interpolated position
-            double vZo = alglib.spline2dcalc(ZoSpline, decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
+            double vZo = bilinearInterpolation(_Zo[1], _Zo[3], _Zo[0], _Zo[2], _X[1], _X[0], _Y[0], _Y[1], decimal.ToDouble(numX.Value), decimal.ToDouble(numY.Value));
 
             // Round and calc offset val
             vZo = Math.Round(vZo, 3);
@@ -135,7 +132,7 @@ namespace Test
             {
                 for (int j = 0; j < xs.Length; j++)
                 {
-                    Zos[i, j] = alglib.spline2dcalc(ZoSpline, j, i);
+                    Zos[i, j] = bilinearInterpolation(_Zo[1], _Zo[3], _Zo[0], _Zo[2], _X[1], _X[0], _Y[0], _Y[1], j, i);
                 }
             }
 

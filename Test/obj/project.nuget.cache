@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6bVDxnpzMwXnw26gR379EL9t+jqBFEp8/7cqVQf30WfHfn8zzeYhs1zpJGUV8ga+p3lORcNalIWItjRN/RiXJg==",
+  "dgSpecHash": "je9hR58LFG0xbiR8oceNeXPiUIrkVccLbP9FiysJPzIRg3TBW5tJ5DpswofYdx5/UfRmgv8q1kLQyZbn5OZrxQ==",
   "success": true,
   "projectFilePath": "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\dingo\\.nuget\\packages\\alglib.net\\3.17.0\\alglib.net.3.17.0.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
