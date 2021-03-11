@@ -137,7 +137,7 @@ namespace Test
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(102, 55);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Z Position";
+            this.label2.Text = "Zo Offset";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblZo
