@@ -40,19 +40,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\brad.martin\\.nuget\\packages\\": {}
+    "C:\\Users\\space\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
+      "projectUniqueName": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
       "projectName": "Test",
-      "projectPath": "C:\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
-      "packagesPath": "C:\\Users\\brad.martin\\.nuget\\packages\\",
-      "outputPath": "C:\\Repos\\2DCalibrationInterpolation\\Test\\obj\\",
+      "projectPath": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\Test.csproj",
+      "packagesPath": "C:\\Users\\space\\.nuget\\packages\\",
+      "outputPath": "X:\\Programs\\Repos\\2DCalibrationInterpolation\\Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\brad.martin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\space\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -101,7 +101,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
