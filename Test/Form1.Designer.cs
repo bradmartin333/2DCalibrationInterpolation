@@ -173,9 +173,9 @@ namespace Test
             this.pbxZo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxZo.TabIndex = 13;
             this.pbxZo.TabStop = false;
-            this.pbxZo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
             this.pbxZo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
             this.pbxZo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
+            this.pbxZo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbxZo_Click);
             // 
             // Form1
             // 
@@ -184,7 +184,6 @@ namespace Test
             this.ClientSize = new System.Drawing.Size(434, 214);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
-            this.Text = "interpx";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numX)).EndInit();
