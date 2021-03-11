@@ -19,7 +19,6 @@ X:\Programs\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.c
 X:\Programs\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.Properties.Resources.resources
 C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.csprojAssemblyReference.cache
 C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.Form1.resources
-C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.Properties.Resources.resources
 C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.csproj.GenerateResource.cache
 C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.AssemblyInfoInputs.cache
 C:\Repos\2DCalibrationInterpolation\Test\obj\Debug\netcoreapp3.1\Test.AssemblyInfo.cs
