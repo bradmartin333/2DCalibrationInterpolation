@@ -10,3 +10,6 @@ method: https://www.gnu.org/software/gsl/doc/html/interp.html#id5
 
 ### C#: Generate interpolation grid for runtime sampling (relies on ALGLIB)
 method: https://www.alglib.net/translator/man/manual.csharp.html#struct_spline2dinterpolant
+
+### C# ver2: Now with one simple function instead of any .dlls (relies on Algebra!!!)
+method: https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
