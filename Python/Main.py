@@ -10,7 +10,7 @@ from time import gmtime, strftime
 
 # machine stage info
 xMin = 0
-xMax = 500
+xMax = 800
 yMin = 0
 yMax = 500
 inc = 5
@@ -18,11 +18,11 @@ xSteps = int((xMax - xMin) / inc)
 ySteps = int((yMax - yMin) / inc)
 
 # collect data
-optics = True
+optics = False
 x = []
 y = []
 z = []
-with open("Python/PositionMemory.txt") as data:
+with open("Python/PositionMemorySpartanTargetPostCal.txt") as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
@@ -33,26 +33,26 @@ with open("Python/PositionMemory.txt") as data:
             z.append(float(positions[2]))
 
 # remove min
-minZ = min(z)
+avgZ = sum(z) / len(z)
 for i in range(len(z)):
-    z[i] -= minZ
+    z[i] -= avgZ
 
 # empty table
-vals = np.zeros((ySteps,xSteps))
+vals = np.zeros((xSteps,ySteps))
 
 # target grid to interpolate to
 xi = np.arange(0,xMax,inc)
 yi = np.arange(0,yMax,inc)
-xi,yi = np.meshgrid(xi,yi)
+xi,yi = np.meshgrid(yi,xi)
 
 # interpolate
-zi = griddata((x,y),z,(xi,yi),method='linear')
+zi = griddata((x,y),z,(yi,xi),method='linear')
 
 # insert valid calibration values into table
-for j in range(int(yMax/inc)):
-    for i in range(int(xMax/inc)):
-        if not np.isnan(zi[j][i]):
-            vals[j,i] = zi[j][i]
+for i in range(int(xMax/inc)):
+    for j in range(int(yMax/inc)):
+        if not np.isnan(zi[i][j]):
+            vals[i,j] = zi[i][j]
 
 # output
 np.savetxt('output.txt', vals, delimiter='\t', fmt='%1.3f')
@@ -64,7 +64,7 @@ numPos = 0
 with open('Python/2dCal.txt', 'w') as dataOut:
     print('\' CHUCK 2D CALIBRATION', file=dataOut)
     print('\' CREATED ' + strftime("%Y-%m-%d %H:%M:%S", gmtime()), file=dataOut)
-    print(':START2D 2 1 6 4 -5 -5 102', file=dataOut)
+    print(':START2D 2 1 4 6 -5 -5 102', file=dataOut)
     print(':START2D POSUNIT=METRIC CORUNIT=METRIC\n', file=dataOut)
     for line in lines:
         line = line.rstrip('\n')
@@ -95,7 +95,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.xaxis.set_ticks_position('top')
 ax.xaxis.set_label_position('top') 
-plt.contourf(xi,yi,vals)
+plt.contourf(yi,xi,vals)
 plt.plot(x,y,'k.')
 plt.xlabel('X',fontsize=16)
 plt.ylabel('Y',fontsize=16)
