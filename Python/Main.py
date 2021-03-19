@@ -22,7 +22,7 @@ optics = False
 x = []
 y = []
 z = []
-with open("Python/PositionMemorySpartanTargetPostCal.txt") as data:
+with open("Python/PositionMemorySpartanTarget_MetroCal_Shifted.txt") as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
@@ -33,9 +33,9 @@ with open("Python/PositionMemorySpartanTargetPostCal.txt") as data:
             z.append(float(positions[2]))
 
 # remove min
-avgZ = sum(z) / len(z)
+minZ = min(z)
 for i in range(len(z)):
-    z[i] -= avgZ
+    z[i] -= minZ
 
 # empty table
 vals = np.zeros((xSteps,ySteps))
@@ -64,7 +64,7 @@ numPos = 0
 with open('Python/2dCal.txt', 'w') as dataOut:
     print('\' CHUCK 2D CALIBRATION', file=dataOut)
     print('\' CREATED ' + strftime("%Y-%m-%d %H:%M:%S", gmtime()), file=dataOut)
-    print(':START2D 2 1 4 6 -5 -5 102', file=dataOut)
+    print(':START2D 1 2 4 6 -5 -5 102', file=dataOut)
     print(':START2D POSUNIT=METRIC CORUNIT=METRIC\n', file=dataOut)
     for line in lines:
         line = line.rstrip('\n')
@@ -75,7 +75,7 @@ with open('Python/2dCal.txt', 'w') as dataOut:
             if val == '0.000':
                 linebuffer += '0\t0\t'
             else:
-                linebuffer += str(float(val) * -1) + '\t0\t'
+                linebuffer += str(float(val) * -1) + '\t' + str(float(val) * -1) + '\t'
         linebuffer += '0\t0\t0\t0'
         print(linebuffer, file=dataOut)
     for i in range(2):
