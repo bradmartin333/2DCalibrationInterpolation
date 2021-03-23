@@ -4,10 +4,6 @@ import os
 from scipy.interpolate import griddata
 from time import gmtime, strftime
 
-# can create test data here
-#data = np.random.rand(9,9) * (500)
-#np.savetxt('data.txt', data, delimiter=',', fmt='%1.3f')
-
 # machine stage info
 xMin = 0
 xMax = 800
@@ -22,7 +18,7 @@ optics = False
 x = []
 y = []
 z = []
-with open("Python/PositionMemorySpartanTarget_MetroCal_Shifted.txt") as data:
+with open("Python/19MAR2021/PositionMemorySpartanTarget_MetroCal_Shifted.txt") as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
@@ -32,10 +28,15 @@ with open("Python/PositionMemorySpartanTarget_MetroCal_Shifted.txt") as data:
         else:
             z.append(float(positions[2]))
 
-# remove min
-minZ = min(z)
+# # remove min
+# minZ = min(z)
+# for i in range(len(z)):
+#     z[i] -= minZ
+
+# remove avg
+avgZ = sum(z) / len(z)
 for i in range(len(z)):
-    z[i] -= minZ
+    z[i] -= avgZ
 
 # empty table
 vals = np.zeros((xSteps,ySteps))
@@ -60,31 +61,32 @@ np.savetxt('output.txt', vals, delimiter='\t', fmt='%1.3f')
 # reformat
 textfile = open("output.txt")
 lines = textfile.readlines()
-numPos = 0
+
+numPos = len(lines[0].rstrip('\n').split('\t'))
+blankLine = '0\t0\t'
+for j in range(numPos):
+    blankLine += '0\t0\t'
+blankLine += '0\t0'
+
 with open('Python/2dCal.txt', 'w') as dataOut:
     print('\' CHUCK 2D CALIBRATION', file=dataOut)
     print('\' CREATED ' + strftime("%Y-%m-%d %H:%M:%S", gmtime()), file=dataOut)
     print(':START2D 1 2 4 6 -5 -5 102', file=dataOut)
     print(':START2D POSUNIT=METRIC CORUNIT=METRIC\n', file=dataOut)
+    print(blankLine, file=dataOut)
     for line in lines:
-        line = line.rstrip('\n')
-        line = line.split('\t')
-        numPos = len(line)
-        linebuffer = ''
+        line = line.rstrip('\n').split('\t')
+        linebuffer = '0\t0\t'
         for val in line:
             if val == '0.000':
                 linebuffer += '0\t0\t'
             else:
                 linebuffer += str(float(val) * -1) + '\t' + str(float(val) * -1) + '\t'
-        linebuffer += '0\t0\t0\t0'
+        linebuffer += '0\t0'
         print(linebuffer, file=dataOut)
-    for i in range(2):
-        linebuffer = ''
-        for j in range(numPos):
-            linebuffer += '0\t0\t'
-        linebuffer += '0\t0\t0\t0'
-        print(linebuffer, file=dataOut)
+    print(blankLine, file=dataOut)
     print('\n:END', file=dataOut)
+
 textfile.close()
 
 # cleanup
