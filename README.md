@@ -16,3 +16,6 @@ method: https://helloacm.com/cc-function-to-compute-the-bilinear-interpolation/
 
 ### F#: Move algebra function into a dll
 method: Init Grid, then Interp2d
+
+### C# with Python: Use pyinstaller .exe in C#
+method: Are you sure you want to know? It isn't pretty... but it works!
