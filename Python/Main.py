@@ -18,7 +18,7 @@ optics = False
 x = []
 y = []
 z = []
-with open("Python/19MAR2021/PositionMemorySpartanTarget_MetroCal_Shifted.txt") as data:
+with open("Python/TargetPositionMemory.txt") as data:
     for line in data:
         positions = line.split(',')
         x.append(float(positions[0]))
