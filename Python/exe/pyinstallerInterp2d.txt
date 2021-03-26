@@ -1,1 +1,0 @@
-pyinstaller --onefile .\interp2d.py --exclude-module matplotlib --exclude-module PIL --exclude-module tcl --exclude-module tcl8 --exclude-module tk
