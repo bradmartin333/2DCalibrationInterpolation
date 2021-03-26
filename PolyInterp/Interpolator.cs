@@ -1,4 +1,4 @@
-﻿namespace XferPrint.Utility
+﻿namespace PolyInterp
 {
     public class Interpolator
     {
