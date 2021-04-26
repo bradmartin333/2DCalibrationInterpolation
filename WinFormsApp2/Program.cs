@@ -16,17 +16,17 @@ namespace WinFormsApp2
         private static Point _Range = new Point(800, 500);
         private static double[,] _ChuckData;
         private static double _Average;
-        private static double _OutlierThreshold = 0.05;
-        private static double[,] _OutputData;
+        private static double _OutlierThreshold = 0.025;
+        private static double[,] _RawData;
         private static Point _Steps;
 
         static void Main()
         {
             _Steps = new Point((int)_Range.X / Increment, (int)_Range.Y / Increment);
             _ChuckData = new double[_Steps.Y, _Steps.X];
-            _OutputData = new double[_Steps.Y, _Steps.X];
+            _RawData = new double[_Steps.Y, _Steps.X + 1];
             FilterData();
-            Application.Run(new Form1(_OutputData));
+            Application.Run(new Form1(_RawData));
         }
 
         private static void FilterData()
@@ -51,6 +51,7 @@ namespace WinFormsApp2
                 sum += z;
                 count++;
                 _ChuckData[y, x] = z;
+                _RawData[y, _Steps.X - x] = z;
             }
             _Average = sum / count;
 
@@ -98,7 +99,12 @@ namespace WinFormsApp2
                 {
                     if (_ChuckData[j, i] != 0)
                     {
-                        _OutputData[j, _Steps.X - i] = _ChuckData[j, i];
+                        _RawData[j, _Steps.X - i] -= (_ChuckData[j, i] + _Average);
+                        File.AppendAllText(_Path + "EXPECTED.txt", string.Format("{0},{1},{2}\n", i * Increment, j * Increment, Math.Round(_RawData[j, _Steps.X - i], 3)));
+                    }
+                    else
+                    {
+                        _RawData[j, _Steps.X - i] = 0.0;
                     }
                 }
             }
