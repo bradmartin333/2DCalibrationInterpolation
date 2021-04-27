@@ -32,7 +32,7 @@ namespace WinFormsApp2
         private static void FilterData()
         {
             // Check for data
-            string chuckPath = _Path + "TARGET.txt";
+            string chuckPath = _Path + "SOURCE.txt";
             if (!File.Exists(chuckPath))
             {
                 return;

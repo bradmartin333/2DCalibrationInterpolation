@@ -11,7 +11,7 @@ with open("Python/Debugging/SOURCEMAP.txt") as data:
     z.append(float(positions[2]))
 
 center = [242.032, 292.368]
-radius = 100
+radius = 92.5
 
 avgZ = sum(z) / len(z)
 
