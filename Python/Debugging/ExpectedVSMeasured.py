@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 # Load data from CSV
-dat = np.genfromtxt('Python/Debugging/CLEANMEASURED.txt', delimiter=',',skip_header=0)
+dat = np.genfromtxt('Python/Debugging/CLEANSOURCE.txt', delimiter=',',skip_header=0)
 X_dat = dat[:,0]
 Y_dat = dat[:,1]
 Z_dat = dat[:,2]
@@ -35,5 +35,5 @@ plt.gca().invert_yaxis()
 plt.xlabel('X',fontsize=16)
 plt.ylabel('Y',fontsize=16)
 plt.colorbar(label = "Micrometers of Error")  
-plt.title("Spartan Target Chuck Flatness")
+plt.title("Spartan Source Chuck Flatness")
 plt.show()
