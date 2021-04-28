@@ -17,22 +17,20 @@ namespace WinFormsApp2
         private static double[,] _ChuckData;
         private static double _Average;
         private static double _OutlierThreshold = 0.025;
-        private static double[,] _RawData;
         private static Point _Steps;
 
         static void Main()
         {
             _Steps = new Point((int)_Range.X / Increment, (int)_Range.Y / Increment);
             _ChuckData = new double[_Steps.Y, _Steps.X];
-            _RawData = new double[_Steps.Y, _Steps.X + 1];
             FilterData();
-            Application.Run(new Form1(_RawData));
+            Application.Run(new Form1(_ChuckData));
         }
 
         private static void FilterData()
         {
             // Check for data
-            string chuckPath = _Path + "SOURCE.txt";
+            string chuckPath = _Path + "TARGET.txt";
             if (!File.Exists(chuckPath))
             {
                 return;
@@ -51,7 +49,6 @@ namespace WinFormsApp2
                 sum += z;
                 count++;
                 _ChuckData[y, x] = z;
-                _RawData[y, _Steps.X - x] = z;
             }
             _Average = sum / count;
 
@@ -99,12 +96,7 @@ namespace WinFormsApp2
                 {
                     if (_ChuckData[j, i] != 0)
                     {
-                        _RawData[j, _Steps.X - i] -= (_ChuckData[j, i] + _Average);
-                        File.AppendAllText(_Path + "EXPECTED.txt", string.Format("{0},{1},{2}\n", i * Increment, j * Increment, Math.Round(_RawData[j, _Steps.X - i], 3)));
-                    }
-                    else
-                    {
-                        _RawData[j, _Steps.X - i] = 0.0;
+                        File.AppendAllText(_Path + "CLEANED.txt", string.Format("{0},{1},{2}\n", i * Increment, j * Increment, Math.Round(_ChuckData[j, i], 3)));
                     }
                 }
             }

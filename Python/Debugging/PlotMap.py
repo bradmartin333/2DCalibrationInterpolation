@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 
 # Load data from CSV
-dat = np.genfromtxt('Python/Debugging/CLEANSOURCE.txt', delimiter=',',skip_header=0)
+dat = np.genfromtxt('Python/Debugging/CLEANED.txt', delimiter=',',skip_header=0)
 X_dat = dat[:,0]
 Y_dat = dat[:,1]
 Z_dat = dat[:,2]
@@ -15,18 +15,15 @@ for i in range(len(X_dat)):
   Y = np.append(Y, Y_dat[i])
   Z = np.append(Z, Z_dat[i])
 
-# dat = np.genfromtxt('Python/Debugging/CLEANMEASURED.txt', delimiter=',',skip_header=0)
-# Z_dat = dat[:,2]
-
-# for i in range(len(Z_dat)):
-#   Z[i] -= Z_dat[i]
-
 # create x-y points to be used in heatmap
 xi = np.linspace(X.min(), X.max(), 1000)
 yi = np.linspace(Y.min(), Y.max(), 1000)
 
 # Interpolate for plotting
 zi = griddata((X, Y), Z, (xi[None,:], yi[:,None]), method='cubic')
+
+print(griddata((X, Y), Z, (564.807, 249.123), method='cubic'))
+print(griddata((X, Y), Z, (610.357, 248.673), method='cubic'))
 
 # Create the contour plot
 CS = plt.contourf(xi, yi, zi)
