@@ -1,0 +1,14 @@
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.csprojAssemblyReference.cache
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.Properties.Resources.resources
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.csproj.GenerateResource.cache
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.csproj.CoreCompileInputs.cache
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\SPOT.exe.config
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\SPOT.exe
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\SPOT.pdb
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\OxyPlot.dll
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\OxyPlot.WindowsForms.dll
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\OxyPlot.xml
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\bin\Debug\OxyPlot.WindowsForms.xml
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.csproj.CopyComplete
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.exe
+X:\Programs\Repos\2DCalibrationInterpolation\SPOT\obj\Debug\SPOT.pdb
