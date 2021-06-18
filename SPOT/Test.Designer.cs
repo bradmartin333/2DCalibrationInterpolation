@@ -31,6 +31,7 @@ namespace SPOT
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.scatterPlotView = new OxyPlot.WindowsForms.PlotView();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,9 +58,14 @@ namespace SPOT
             this.scatterPlotView.Size = new System.Drawing.Size(635, 543);
             this.scatterPlotView.TabIndex = 1;
             this.scatterPlotView.Text = "plotView2";
+            this.scatterPlotView.Visible = false;
             this.scatterPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
             this.scatterPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.scatterPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // Test
             // 
@@ -78,5 +84,6 @@ namespace SPOT
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private OxyPlot.WindowsForms.PlotView scatterPlotView;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
